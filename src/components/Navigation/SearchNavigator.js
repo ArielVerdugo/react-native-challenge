@@ -29,7 +29,12 @@ export function SearchNavigator() {
       <Stack.Screen
         component={SongInfo}
         name="Song Info"
-        options={{title: 'Song Info'}}
+        options={{
+          title: 'Song Info',
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_bottom',
+        }}
       />
     </Stack.Navigator>
   );

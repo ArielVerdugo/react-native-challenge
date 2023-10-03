@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, Text} from 'react-native';
+import {Platform, Text, useColorScheme} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../../screens/Home/Home';
@@ -14,6 +14,7 @@ import styles, {
 import Player from '../../screens/Player/Player';
 import Search from '../../screens/WIP/Search';
 import {SearchNavigator} from './SearchNavigator';
+import {DARK} from '../../constants/en';
 
 const IS_IOS = Platform.OS === 'ios';
 
@@ -58,32 +59,45 @@ const SearchIcon = ({focused}) => (
 );
 
 const Stack = createNativeStackNavigator();
-const MainStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="Home"
-      component={BottomTabNavigator}
-      options={{
-        headerRight: () => <Text style={styles.headerRight}>Edit</Text>,
-        headerLargeTitle: true,
-        headerLargeTitleShadowVisible: false,
-      }}
-    />
-    <Stack.Screen
-      name="Player"
-      component={Player}
-      options={{
-        animation: 'slide_from_bottom',
-        headerShown: false,
-      }}
-    />
-    <Stack.Screen name="WIP" component={Search} />
-  </Stack.Navigator>
-);
+
+const MainStack = () => {
+  const theme = useColorScheme();
+  const isDarkTheme = theme === DARK;
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={BottomTabNavigator}
+        options={{
+          headerRight: () => <Text style={styles.headerRight}>Edit</Text>,
+          headerLargeTitle: true,
+          headerLargeTitleShadowVisible: false,
+          headerStyle: {
+            backgroundColor: isDarkTheme ? '#212529' : 'white',
+          },
+          headerTitleStyle: {
+            color: isDarkTheme ? 'white' : '#212529',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Player"
+        component={Player}
+        options={{
+          animation: 'slide_from_bottom',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen name="WIP" component={Search} />
+    </Stack.Navigator>
+  );
+};
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
+  const theme = useColorScheme();
+  const isDarkTheme = theme === DARK;
   return (
     <Tab.Navigator
       initialRouteName="Library"
@@ -92,17 +106,7 @@ const BottomTabNavigator = () => {
         tabBarLabelStyle: styles.tabBarLabel,
         tabBarActiveTintColor: PRIMARY_COLOR,
         tabBarInactiveTintColor: INACTIVE_COLOR,
-        tabBarStyle: styles.tabBar,
-        ...(IS_IOS && {
-          tabBarBackground: () => (
-            <BlurView
-              blurType="chromeMaterialLight"
-              style={styles.blur}
-              blurAmount={BLUR_AMOUNT}
-              reducedTransparencyFallbackColor="white"
-            />
-          ),
-        }),
+        tabBarStyle: isDarkTheme === true ? styles.tabBarDark : styles.tabBar,
       }}>
       <Tab.Screen
         name="ListenNow"

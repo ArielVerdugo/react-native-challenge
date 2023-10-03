@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
-import {Text, View, SafeAreaView, FlatList} from 'react-native';
+import {Text, View, SafeAreaView, FlatList, useColorScheme} from 'react-native';
 import {SearchBar} from '@rneui/themed';
-import {SEARCH_DATA, HINT_SEARCH} from '../../constants/en';
+import {SEARCH_DATA, HINT_SEARCH, DARK} from '../../constants/en';
 import {styles} from './Search.styles';
+import {stylesDark} from './SearchDarkMode.styles';
+
 import {SearchController} from '../../controllers/SearchController';
 
 const Search = ({darkModeEnabled, navigation}) => {
@@ -20,13 +22,15 @@ const Search = ({darkModeEnabled, navigation}) => {
     setSearch(searchValue);
     refetch();
   };
+  const theme = useColorScheme();
+  const isDarkTheme = theme === DARK;
 
   const ItemSeparatorView = () => {
     return <View style={styles.itemSeparator} />;
   };
   const ItemView = ({item}) => {
     return (
-      <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+      <Text style={sDarkTheme === true ? stylesDark.itemStyleDark : styles.itemStyle} onPress={() => getItem(item)}>
         {item?.trackName}
       </Text>
     );
@@ -46,7 +50,10 @@ const Search = ({darkModeEnabled, navigation}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={
+        isDarkTheme === true ? stylesDark.containerDark : styles.container
+      }>
       <View>
         <SearchBar
           placeholder={HINT_SEARCH}

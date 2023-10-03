@@ -1,11 +1,15 @@
-import {Text, View, Image, SafeAreaView, Button, Alert} from 'react-native';
+import {Text, View, Image, SafeAreaView, Button, Alert,useColorScheme} from 'react-native';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import Sound from 'react-native-sound';
-import {PLAYBACK, PLAY, VOLUME} from '../../constants/en';
+import {PLAYBACK, PLAY, VOLUME,DARK} from '../../constants/en';
 import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
+import {stylesDark} from './SongInfoDark.styles';
 
 export function SongInfo() {
+  const theme = useColorScheme();
+  const isDarkTheme = theme === DARK;
+
   Sound.setCategory(PLAYBACK);
   const route = useRoute();
   const sound = useMemo(() => {
@@ -26,10 +30,23 @@ export function SongInfo() {
   const playSong = useCallback(() => sound.play(), [sound]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={
+        isDarkTheme === true ? stylesDark.containerDark : styles.container
+      }>
       <View>
-        <Text style={styles.textTitle}>{route.params.item.trackName}</Text>
-        <Text style={styles.textTitle}>{route.params.item.artist}</Text>
+        <Text
+          style={
+            isDarkTheme === true ? stylesDark.textTitleDark : styles.textTitle
+          }>
+          {route.params.item.trackName}
+        </Text>
+        <Text
+          style={
+            isDarkTheme === true ? stylesDark.textTitleDark : styles.textTitle
+          }>
+          {route.params.item.artist}
+        </Text>
         <Image
           style={styles.imageHeader}
           accessibilityIgnoresInvertColors={true}

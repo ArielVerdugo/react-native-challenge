@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
   tabBar: {
     position: 'absolute',
   },
+  tabBarDark: {
+    position: 'absolute',
+    backgroundColor: '#212529',
+  },
   tabBarLabel: {
     fontWeight: '400',
   },
