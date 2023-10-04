@@ -14,6 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-ReactNativeCodeChallenge-ReactNativeCodeChallengeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-ReactNativeCodeChallenge-ReactNativeCodeChallengeTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8D3BE3942ACDC0E1004EBFD0 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3BE3932ACDC0E1004EBFD0 /* dummy.swift */; };
 		D0758AFA28C62E15005BC2CB /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0758AEA28C62E15005BC2CB /* Fontisto.ttf */; };
 		D0758AFB28C62E15005BC2CB /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0758AEB28C62E15005BC2CB /* Octicons.ttf */; };
 		D0758AFC28C62E15005BC2CB /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0758AEC28C62E15005BC2CB /* Feather.ttf */; };
@@ -59,6 +60,8 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-ReactNativeCodeChallenge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeCodeChallenge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReactNativeCodeChallenge/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ReactNativeCodeChallenge-ReactNativeCodeChallengeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeCodeChallenge-ReactNativeCodeChallengeTests.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeCodeChallenge-ReactNativeCodeChallengeTests/Pods-ReactNativeCodeChallenge-ReactNativeCodeChallengeTests.release.xcconfig"; sourceTree = "<group>"; };
+		8D3BE3922ACDC0E0004EBFD0 /* ReactNativeCodeChallenge-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNativeCodeChallenge-Bridging-Header.h"; sourceTree = "<group>"; };
+		8D3BE3932ACDC0E1004EBFD0 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		D0758AEA28C62E15005BC2CB /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		D0758AEB28C62E15005BC2CB /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		D0758AEC28C62E15005BC2CB /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				8D3BE3932ACDC0E1004EBFD0 /* dummy.swift */,
+				8D3BE3922ACDC0E0004EBFD0 /* ReactNativeCodeChallenge-Bridging-Header.h */,
 			);
 			name = ReactNativeCodeChallenge;
 			sourceTree = "<group>";
@@ -264,7 +269,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1430;
 					};
 				};
 			};
@@ -486,6 +491,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				8D3BE3942ACDC0E1004EBFD0 /* dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,6 +511,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-ReactNativeCodeChallenge-ReactNativeCodeChallengeTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -532,6 +539,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-ReactNativeCodeChallenge-ReactNativeCodeChallengeTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = ReactNativeCodeChallengeTests/Info.plist;
@@ -572,6 +580,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ReactNativeCodeChallenge;
+				SWIFT_OBJC_BRIDGING_HEADER = "ReactNativeCodeChallenge-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -597,6 +606,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ReactNativeCodeChallenge;
+				SWIFT_OBJC_BRIDGING_HEADER = "ReactNativeCodeChallenge-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
