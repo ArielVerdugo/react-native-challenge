@@ -13,6 +13,7 @@ import styles, {
 } from './styles';
 import Player from '../../screens/Player/Player';
 import WorkInProgress from '../../screens/WIP/WorkInProgress';
+import { SearchNavigator } from './SearchNavigator';
 
 const IS_IOS = Platform.OS === 'ios';
 
@@ -135,14 +136,7 @@ const BottomTabNavigator = () => {
           title: 'Library',
         }}
       />
-      <Tab.Screen
-        name="Search"
-        component={WorkInProgress}
-        options={{
-          tabBarIcon: SearchIcon,
-          title: 'Search',
-        }}
-      />
+      <Tab.Screen name="Search" component={SearchNavigator} />
     </Tab.Navigator>
   );
 };

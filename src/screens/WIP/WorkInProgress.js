@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 import {SearchBar} from '@rneui/themed';
 
-const WorkInProgress = ({darkModeEnabled}) => {
+const WorkInProgress = ({darkModeEnabled, navigation}) => {
   const [search, setSearch] = useState('');
   const [enabled, setEnabled] = useState(false);
-  const {data} = useQuery({
+  const {data, isLoading} = useQuery({
     queryKey: ['repoData', search],
     enabled: enabled,
     queryFn: () =>
@@ -30,34 +30,37 @@ const WorkInProgress = ({darkModeEnabled}) => {
   };
 
   const ItemSeparatorView = () => {
-    return (
-      <View style={{height: 0.5, width: '100%', backgroundColor: '#C8C8C8'}} />
-    );
+    return <View style={styles.itemSeparator} />;
   };
   const ItemView = ({item}) => {
     if (item === undefined) {
     } else {
       return (
         <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-          {item}
+          {item.trackName}
         </Text>
       );
     }
   };
   const getItem = item => {
-    //todo
+    navigation.navigate('Song Info', {item: item});
   };
 
   const showData = () => {
     if (data === undefined) {
       return [];
     } else {
-      return data.results.map(p => p.trackName);
+      return data.results.map(p => ({
+        trackName: p.trackName,
+        preview: p.previewUrl,
+        artwork: p.artworkUrl100,
+        artist: p.artistName,
+      }));
     }
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={styles.container}>
       <View>
         <SearchBar
           placeholder="Buscar..."
@@ -78,9 +81,15 @@ const WorkInProgress = ({darkModeEnabled}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
+    flex: 1,
   },
   itemStyle: {
     padding: 10,
+  },
+  itemSeparator: {
+    height: 0.5,
+    width: '100%',
+    backgroundColor: '#C8C8C8',
   },
 });
 
