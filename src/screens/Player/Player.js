@@ -3,7 +3,7 @@ import {ImageBackground, StatusBar} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import styles from './Player.styles';
 import {useRoute} from '@react-navigation/native';
-import WorkInProgress from '../WIP/WorkInProgress';
+import Search from '../WIP/Search';
 
 const Player = () => {
   const {
@@ -16,7 +16,7 @@ const Player = () => {
         style={styles.blur}
         blurType="chromeMaterialDark"
         blurAmount={32}>
-        <WorkInProgress darkModeEnabled />
+        <Search darkModeEnabled />
       </BlurView>
     </ImageBackground>
   );

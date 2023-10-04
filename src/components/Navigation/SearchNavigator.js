@@ -2,7 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles, {ICON_SIZE, INACTIVE_COLOR, PRIMARY_COLOR} from './styles';
-import WorkInProgress from '../../screens/WIP/WorkInProgress';
+import Search from '../../screens/WIP/Search';
 import {SongInfo} from '../../screens/WIP/SongInfo';
 
 const Stack = createNativeStackNavigator();
@@ -20,7 +20,7 @@ export function SearchNavigator() {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
         name={'Search'}
-        component={WorkInProgress}
+        component={Search}
         options={{
           tabBarIcon: SearchIcon,
           title: 'Search',

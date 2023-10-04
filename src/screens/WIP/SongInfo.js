@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, Image, SafeAreaView, Button} from 'react-native';
 import Sound from 'react-native-sound';
 import {PLAYBACK, PLAY} from '../../constants/en';
-import {styles} from '../WIP/SongInfo.styles';
+import {styles} from './SongInfo.styles';
 
 export function SongInfo({route}) {
   Sound.setCategory(PLAYBACK);

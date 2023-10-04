@@ -3,9 +3,9 @@ import {useQuery} from '@tanstack/react-query';
 import {Text, View, SafeAreaView, FlatList} from 'react-native';
 import {SearchBar} from '@rneui/themed';
 import {SEARCH_DATA, HINT_SEARCH} from '../../constants/en';
-import {styles} from '../WIP/WrokInProgress.styles';
+import {styles} from './Search.styles';
 
-const WorkInProgress = ({darkModeEnabled, navigation}) => {
+const Search = ({darkModeEnabled, navigation}) => {
   const [search, setSearch] = useState('');
   const [enabled, setEnabled] = useState(false);
   const {data} = useQuery({
@@ -73,4 +73,4 @@ const WorkInProgress = ({darkModeEnabled, navigation}) => {
   );
 };
 
-export default WorkInProgress;
+export default Search;
