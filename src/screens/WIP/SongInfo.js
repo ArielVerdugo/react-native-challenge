@@ -1,8 +1,27 @@
 import React from 'react';
-import {Text, View, Image, StyleSheet, SafeAreaView} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  SafeAreaView,
+  Button,
+} from 'react-native';
+import Sound from 'react-native-sound';
 
 export function SongInfo({route}) {
-  console.log(route.params.item);
+  Sound.setCategory('Playback');
+
+  const sound = new Sound(
+    route.params.item.preview,
+    route.params.item.preview,
+    error => {
+      if (error) {
+        console.log(error.message);
+      }
+    },
+  );
+  sound.setVolume(2);
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -13,6 +32,7 @@ export function SongInfo({route}) {
           accessibilityIgnoresInvertColors={true}
           source={{uri: `${route.params.item.artwork}`}}
         />
+        <Button title={'Play'} onPress={sound.play} />
       </View>
     </SafeAreaView>
   );
@@ -40,7 +60,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   imageHeader: {
-    height: 400,
+    height: 300,
     width: '100%',
   },
 });
