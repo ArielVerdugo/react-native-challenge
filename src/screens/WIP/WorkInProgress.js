@@ -1,20 +1,15 @@
 import React, {useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  FlatList,
-  ActivityIndicator,
-} from 'react-native';
+import {Text, View, SafeAreaView, FlatList} from 'react-native';
 import {SearchBar} from '@rneui/themed';
+import {SEARCH_DATA, HINT_SEARCH} from '../../constants/en';
+import {styles} from '../WIP/WrokInProgress.styles';
 
 const WorkInProgress = ({darkModeEnabled, navigation}) => {
   const [search, setSearch] = useState('');
   const [enabled, setEnabled] = useState(false);
-  const {data, isLoading} = useQuery({
-    queryKey: ['repoData', search],
+  const {data} = useQuery({
+    queryKey: [{SEARCH_DATA}, search],
     enabled: enabled,
     queryFn: () =>
       fetch(
@@ -63,7 +58,7 @@ const WorkInProgress = ({darkModeEnabled, navigation}) => {
     <SafeAreaView style={styles.container}>
       <View>
         <SearchBar
-          placeholder="Buscar..."
+          placeholder={HINT_SEARCH}
           onChangeText={updateSearch}
           value={search}
         />
@@ -77,20 +72,5 @@ const WorkInProgress = ({darkModeEnabled, navigation}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    flex: 1,
-  },
-  itemStyle: {
-    padding: 10,
-  },
-  itemSeparator: {
-    height: 0.5,
-    width: '100%',
-    backgroundColor: '#C8C8C8',
-  },
-});
 
 export default WorkInProgress;

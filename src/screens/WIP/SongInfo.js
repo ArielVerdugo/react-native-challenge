@@ -1,16 +1,11 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  SafeAreaView,
-  Button,
-} from 'react-native';
+import {Text, View, Image, SafeAreaView, Button} from 'react-native';
 import Sound from 'react-native-sound';
+import {PLAYBACK, PLAY} from '../../constants/en';
+import {styles} from '../WIP/SongInfo.styles';
 
 export function SongInfo({route}) {
-  Sound.setCategory('Playback');
+  Sound.setCategory(PLAYBACK);
 
   const sound = new Sound(
     route.params.item.preview,
@@ -25,42 +20,15 @@ export function SongInfo({route}) {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text style={styles.trackTitle}>{route.params.item.trackName}</Text>
-        <Text style={styles.trackTitle}>{route.params.item.artist}</Text>
+        <Text style={styles.textTitle}>{route.params.item.trackName}</Text>
+        <Text style={styles.textTitle}>{route.params.item.artist}</Text>
         <Image
           style={styles.imageHeader}
           accessibilityIgnoresInvertColors={true}
           source={{uri: `${route.params.item.artwork}`}}
         />
-        <Button title={'Play'} onPress={sound.play} />
+        <Button title={PLAY} onPress={sound.play} />
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-  },
-  trackTitle: {
-    padding: 10,
-    fontSize: 20,
-    fontWeight: '500',
-  },
-  trackArtist: {
-    padding: 10,
-    fontSize: 20,
-    fontWeight: '500',
-  },
-  header: {
-    paddingHorizontal: 16,
-  },
-  h1: {
-    fontSize: 26,
-    fontWeight: '700',
-  },
-  imageHeader: {
-    height: 300,
-    width: '100%',
-  },
-});

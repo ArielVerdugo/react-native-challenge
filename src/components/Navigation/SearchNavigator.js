@@ -1,7 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import { NAVIGATION } from '@/constants';
-import { Home, MovieDetails } from '@/screens';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles, {ICON_SIZE, INACTIVE_COLOR, PRIMARY_COLOR} from './styles';
 import WorkInProgress from '../../screens/WIP/WorkInProgress';
