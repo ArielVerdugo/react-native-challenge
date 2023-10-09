@@ -19,7 +19,7 @@ export function SearchNavigator() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
-        name={'Search'}
+        name="Search"
         component={Search}
         options={{
           tabBarIcon: SearchIcon,
@@ -28,7 +28,7 @@ export function SearchNavigator() {
       />
       <Stack.Screen
         component={SongInfo}
-        name={'Song Info'}
+        name="Song Info"
         options={{title: 'Song Info'}}
       />
     </Stack.Navigator>

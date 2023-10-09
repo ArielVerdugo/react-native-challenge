@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Image, SafeAreaView, Button} from 'react-native';
+import {Text, View, Image, SafeAreaView, Button, Alert} from 'react-native';
 import Sound from 'react-native-sound';
 import {PLAYBACK, PLAY} from '../../constants/en';
 import {styles} from './SongInfo.styles';
@@ -12,7 +12,7 @@ export function SongInfo({route}) {
     route.params.item.preview,
     error => {
       if (error) {
-        console.log(error.message);
+        Alert.alert('Canción no disponible', [{text: 'OK'}]);
       }
     },
   );

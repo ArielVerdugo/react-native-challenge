@@ -28,30 +28,23 @@ const Search = ({darkModeEnabled, navigation}) => {
     return <View style={styles.itemSeparator} />;
   };
   const ItemView = ({item}) => {
-    if (item === undefined) {
-    } else {
-      return (
-        <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-          {item.trackName}
-        </Text>
-      );
-    }
+    return (
+      <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+        {item?.trackName}
+      </Text>
+    );
   };
   const getItem = item => {
     navigation.navigate('Song Info', {item: item});
   };
 
   const showData = () => {
-    if (data === undefined) {
-      return [];
-    } else {
-      return data.results.map(p => ({
-        trackName: p.trackName,
-        preview: p.previewUrl,
-        artwork: p.artworkUrl100,
-        artist: p.artistName,
-      }));
-    }
+    return data?.results.map(p => ({
+      trackName: p.trackName,
+      preview: p.previewUrl,
+      artwork: p.artworkUrl100,
+      artist: p.artistName,
+    }));
   };
 
   return (
@@ -64,7 +57,7 @@ const Search = ({darkModeEnabled, navigation}) => {
         />
         <FlatList
           data={showData()}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => item.key}
           ItemSeparatorComponent={ItemSeparatorView}
           renderItem={ItemView}
         />
