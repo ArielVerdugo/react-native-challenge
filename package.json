@@ -17,10 +17,7 @@
     "@rneui/base": "^0.0.0-edge.2",
     "@rneui/themed": "^0.0.0-edge.2",
     "@tanstack/react-query": "^4.35.3",
-<<<<<<< HEAD
     "axios": "^1.5.1",
-=======
->>>>>>> 8667de7 (Added search logic)
     "react": "18.0.0",
     "react-native": "0.69.4",
     "react-native-actions-sheet": "^0.8.4",

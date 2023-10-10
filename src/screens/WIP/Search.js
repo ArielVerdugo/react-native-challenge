@@ -30,7 +30,11 @@ const Search = ({darkModeEnabled, navigation}) => {
   };
   const ItemView = ({item}) => {
     return (
-      <Text style={sDarkTheme === true ? stylesDark.itemStyleDark : styles.itemStyle} onPress={() => getItem(item)}>
+      <Text
+        style={
+          isDarkTheme === true ? stylesDark.itemStyleDark : styles.itemStyle
+        }
+        onPress={() => getItem(item)}>
         {item?.trackName}
       </Text>
     );

@@ -1,7 +1,15 @@
-import {Text, View, Image, SafeAreaView, Button, Alert,useColorScheme} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  SafeAreaView,
+  Button,
+  Alert,
+  useColorScheme,
+} from 'react-native';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import Sound from 'react-native-sound';
-import {PLAYBACK, PLAY, VOLUME,DARK} from '../../constants/en';
+import {PLAYBACK, PLAY, VOLUME, DARK, SONG_ERROR} from '../../constants/en';
 import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
@@ -15,7 +23,9 @@ export function SongInfo() {
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
-        console.log('este es el error' + error.message);
+        Alert.alert(SONG_ERROR, [
+          {text: 'OK', onPress: () => console.log(error.message)},
+        ]);
       }
     });
   }, [route]);
