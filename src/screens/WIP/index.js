@@ -1,3 +1,3 @@
-import WorkInProgress from './WorkInProgress';
+import Search from './Search';
 
-export default WorkInProgress;
+export default Search;

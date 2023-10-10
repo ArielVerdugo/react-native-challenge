@@ -12,7 +12,8 @@ import styles, {
   PRIMARY_COLOR,
 } from './styles';
 import Player from '../../screens/Player/Player';
-import WorkInProgress from '../../screens/WIP/WorkInProgress';
+import Search from '../../screens/WIP/Search';
+import { SearchNavigator } from './SearchNavigator';
 
 const IS_IOS = Platform.OS === 'ios';
 
@@ -76,7 +77,7 @@ const MainStack = () => (
         headerShown: false,
       }}
     />
-    <Stack.Screen name="WIP" component={WorkInProgress} />
+    <Stack.Screen name="WIP" component={Search} />
   </Stack.Navigator>
 );
 
@@ -105,7 +106,7 @@ const BottomTabNavigator = () => {
       }}>
       <Tab.Screen
         name="ListenNow"
-        component={WorkInProgress}
+        component={Search}
         options={{
           tabBarIcon: PlayNowIcon,
           title: 'Listen Now',
@@ -113,7 +114,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Explore"
-        component={WorkInProgress}
+        component={Search}
         options={{
           tabBarIcon: ExploreIcon,
           title: 'Explore',
@@ -121,7 +122,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Radio"
-        component={WorkInProgress}
+        component={Search}
         options={{
           tabBarIcon: RadioIcon,
           title: 'Radio',
@@ -135,14 +136,7 @@ const BottomTabNavigator = () => {
           title: 'Library',
         }}
       />
-      <Tab.Screen
-        name="Search"
-        component={WorkInProgress}
-        options={{
-          tabBarIcon: SearchIcon,
-          title: 'Search',
-        }}
-      />
+      <Tab.Screen name="Search" component={SearchNavigator} />
     </Tab.Navigator>
   );
 };
