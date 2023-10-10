@@ -1,22 +1,30 @@
-import React from 'react';
 import {Text, View, Image, SafeAreaView, Button, Alert} from 'react-native';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import Sound from 'react-native-sound';
-import {PLAYBACK, PLAY} from '../../constants/en';
+import {PLAYBACK, PLAY, VOLUME} from '../../constants/en';
 import {styles} from './SongInfo.styles';
+import {useRoute} from '@react-navigation/native';
 
-export function SongInfo({route}) {
+export function SongInfo() {
   Sound.setCategory(PLAYBACK);
-
-  const sound = new Sound(
-    route.params.item.preview,
-    route.params.item.preview,
-    error => {
+  const route = useRoute();
+  const sound = useMemo(() => {
+    return new Sound(route.params.item.preview, null, error => {
       if (error) {
-        Alert.alert('Canción no disponible', [{text: 'OK'}]);
+        console.log('este es el error' + error.message);
       }
-    },
-  );
-  sound.setVolume(2);
+    });
+  }, [route]);
+
+  useEffect(() => {
+    sound.setVolume(VOLUME);
+    return () => {
+      sound.release();
+    };
+  });
+
+  const playSong = useCallback(() => sound.play(), [sound]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -27,7 +35,7 @@ export function SongInfo({route}) {
           accessibilityIgnoresInvertColors={true}
           source={{uri: `${route.params.item.artwork}`}}
         />
-        <Button title={PLAY} onPress={sound.play} />
+        <Button title={PLAY} onPress={playSong} />
       </View>
     </SafeAreaView>
   );

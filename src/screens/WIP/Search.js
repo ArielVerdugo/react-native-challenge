@@ -4,24 +4,21 @@ import {Text, View, SafeAreaView, FlatList} from 'react-native';
 import {SearchBar} from '@rneui/themed';
 import {SEARCH_DATA, HINT_SEARCH} from '../../constants/en';
 import {styles} from './Search.styles';
+import {SearchController} from '../../controllers/SearchController';
 
 const Search = ({darkModeEnabled, navigation}) => {
+  var searchWord = '';
   const [search, setSearch] = useState('');
-  const [enabled, setEnabled] = useState(false);
-  const {data} = useQuery({
-    queryKey: [{SEARCH_DATA}, search],
-    enabled: enabled,
-    queryFn: () =>
-      fetch(
-        `https://itunes.apple.com/search?term=${search.replace(
-          /\s/g,
-          '+',
-        )}&entity=song&attribute=artistTerm&attribute=songTerm&attribute=albumTerm&media=music`,
-      ).then(res => res.json()),
+  const searchController = new SearchController();
+  const {data, refetch} = useQuery({
+    queryKey: [SEARCH_DATA],
+    enabled: false,
+    queryFn: () => searchController.getSongs(searchWord),
   });
   const updateSearch = searchValue => {
-    setEnabled(true);
+    searchWord = searchValue;
     setSearch(searchValue);
+    refetch();
   };
 
   const ItemSeparatorView = () => {
@@ -35,6 +32,7 @@ const Search = ({darkModeEnabled, navigation}) => {
     );
   };
   const getItem = item => {
+    console.log(item);
     navigation.navigate('Song Info', {item: item});
   };
 

@@ -13,7 +13,7 @@ import styles, {
 } from './styles';
 import Player from '../../screens/Player/Player';
 import Search from '../../screens/WIP/Search';
-import { SearchNavigator } from './SearchNavigator';
+import {SearchNavigator} from './SearchNavigator';
 
 const IS_IOS = Platform.OS === 'ios';
 
