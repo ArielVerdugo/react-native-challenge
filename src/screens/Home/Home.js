@@ -1,7 +1,8 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {FlatList, ScrollView, Text, View} from 'react-native';
+import {FlatList, ScrollView, Text, View, useColorScheme} from 'react-native';
 import styles from './Home.styles';
+import {stylesDark} from './HomeDark.styles';
 import {Row, Divider, Tile} from '../../components';
 import {
   DATA,
@@ -9,22 +10,29 @@ import {
   RECENTLY_ADDED_DATA,
   DIVIDER_SIZES,
 } from './Constants';
+import {DARK} from '../../constants/en';
 
 const Home = () => {
   const {navigate} = useNavigation();
   const openPlayer = item => navigate('Player', item);
+  const theme = useColorScheme();
+  const isDarkTheme = theme === DARK;
 
   return (
     <>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        contentContainerStyle={styles.container}>
+        contentContainerStyle={
+          isDarkTheme ? stylesDark.container : styles.container
+        }>
         <View style={styles.header}>
           {DATA.map(({title, icon}) => (
             <Row title={title} icon={icon} />
           ))}
           <Divider height={DIVIDER_SIZES.SHORT} />
-          <Text style={styles.h1}>Recently Added</Text>
+          <Text style={isDarkTheme ? stylesDark.h1 : styles.h1}>
+            Recently Added
+          </Text>
         </View>
 
         <FlatList
@@ -44,7 +52,9 @@ const Home = () => {
 
         <View style={styles.header}>
           <Divider height={DIVIDER_SIZES.TINY} />
-          <Text style={styles.h1}>Today's Top Hits</Text>
+          <Text style={isDarkTheme ? stylesDark.h1 : styles.h1}>
+            Today's Top Hits
+          </Text>
         </View>
 
         <FlatList
