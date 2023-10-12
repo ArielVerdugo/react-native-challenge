@@ -8,7 +8,7 @@ import {
   useColorScheme,
 } from 'react-native';
 import {PlayIcon, play} from '../../assets/images';
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Sound from 'react-native-sound';
 import {PLAYBACK, PLAY, VOLUME, DARK, SONG_ERROR} from '../../constants/en';
 import {styles} from './SongInfo.styles';
@@ -18,7 +18,7 @@ import {stylesDark} from './SongInfoDark.styles';
 export function SongInfo() {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
-
+  const [playing, setPlaying] = useState(false);
   Sound.setCategory(PLAYBACK);
   const route = useRoute();
   const sound = useMemo(() => {
@@ -38,7 +38,37 @@ export function SongInfo() {
     };
   });
 
-  const playSong = useCallback(() => sound.play(), [sound]);
+  const playSong = useCallback(playPause, [sound]);
+
+  const playPause = () => {
+    if (sound.isPlaying()) {
+      sound.pause();
+      console.log('entro pause');
+      setPlaying(false);
+    } else {
+      sound.play();
+      console.log('entro play');
+      //setPlaying(true);
+    }
+  };
+  const jumpPrev15Seconds = () => {
+    jumpSeconds(-10);
+  };
+  const jumpNext15Seconds = () => {
+    jumpSeconds(10);
+  };
+
+  const jumpSeconds = secondsToJump => {
+    sound.getCurrentTime(seconds => {
+      var time = seconds + secondsToJump;
+      if (time < 0) {
+        time = 0;
+      } else if (time > sound.getDuration) {
+        time = sound.getDuration;
+      }
+      sound.setCurrentTime(time);
+    });
+  };
 
   return (
     <SafeAreaView
@@ -70,25 +100,19 @@ export function SongInfo() {
             style={styles.itemPlayStyle}
             accessibilityIgnoresInvertColors={true}
             title={'-10'}
-            onPress={playSong}
+            onPress={jumpPrev15Seconds}
           />
           <Button
             style={styles.itemPlayStyle}
             accessibilityIgnoresInvertColors={true}
-            title={PLAY}
-            onPress={playSong}
-          />
-          <Button
-            style={styles.itemPlayStyle}
-            accessibilityIgnoresInvertColors={true}
-            title={'Stop'}
-            onPress={playSong}
+            title={playing ? 'Stop' : 'Play'}
+            onPress={playPause}
           />
           <Button
             style={styles.itemPlayStyle}
             accessibilityIgnoresInvertColors={true}
             title={'+10'}
-            onPress={playSong}
+            onPress={jumpNext15Seconds}
           />
         </View>
       </View>
