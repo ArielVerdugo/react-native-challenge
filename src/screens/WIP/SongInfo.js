@@ -7,6 +7,7 @@ import {
   Alert,
   useColorScheme,
 } from 'react-native';
+import {PlayIcon, play} from '../../assets/images';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import Sound from 'react-native-sound';
 import {PLAYBACK, PLAY, VOLUME, DARK, SONG_ERROR} from '../../constants/en';
@@ -45,6 +46,13 @@ export function SongInfo() {
         isDarkTheme === true ? stylesDark.containerDark : styles.container
       }>
       <View>
+        <View>
+          <Image
+            style={styles.imageHeader}
+            accessibilityIgnoresInvertColors={true}
+            source={{uri: `${route.params.item.artwork}`}}
+          />
+        </View>
         <Text
           style={
             isDarkTheme === true ? stylesDark.textTitleDark : styles.textTitle
@@ -57,12 +65,32 @@ export function SongInfo() {
           }>
           {route.params.item.artist}
         </Text>
-        <Image
-          style={styles.imageHeader}
-          accessibilityIgnoresInvertColors={true}
-          source={{uri: `${route.params.item.artwork}`}}
-        />
-        <Button title={PLAY} onPress={playSong} />
+        <View style={styles.playerContainer}>
+          <Button
+            style={styles.itemPlayStyle}
+            accessibilityIgnoresInvertColors={true}
+            title={'-10'}
+            onPress={playSong}
+          />
+          <Button
+            style={styles.itemPlayStyle}
+            accessibilityIgnoresInvertColors={true}
+            title={PLAY}
+            onPress={playSong}
+          />
+          <Button
+            style={styles.itemPlayStyle}
+            accessibilityIgnoresInvertColors={true}
+            title={'Stop'}
+            onPress={playSong}
+          />
+          <Button
+            style={styles.itemPlayStyle}
+            accessibilityIgnoresInvertColors={true}
+            title={'+10'}
+            onPress={playSong}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
