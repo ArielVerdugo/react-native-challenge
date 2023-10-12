@@ -8,7 +8,7 @@ import {
   useColorScheme,
 } from 'react-native';
 import {PlayIcon, RewindIcon, ForwardIcon} from '../../assets/images';
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Sound from 'react-native-sound';
 import {
   PLAYBACK,
@@ -26,6 +26,7 @@ Sound.setCategory(PLAYBACK);
 export function SongInfo() {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
+  const [playing, setPlaying] = useState(false);
   const route = useRoute();
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
@@ -45,7 +46,15 @@ export function SongInfo() {
   });
 
   const playPause = () => {
-    sound.isPlaying() ? sound.pause() : sound.play();
+    if (sound.isPlaying()) {
+      sound.pause();
+      console.log('entro pause');
+      setPlaying(false);
+    } else {
+      sound.play();
+      console.log('entro play');
+      //setPlaying(true);
+    }
   };
   const jumpPrev10Seconds = () => {
     jumpSeconds(-JUMP_INTERVAL);
