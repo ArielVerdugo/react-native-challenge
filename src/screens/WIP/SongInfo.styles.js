@@ -30,4 +30,10 @@ export const styles = StyleSheet.create({
   itemPlayStyle: {
     padding: 10,
   },
+  slider: {
+    width: 320,
+    opacity: 1,
+    height: 50,
+    marginTop: 5,
+  },
 });

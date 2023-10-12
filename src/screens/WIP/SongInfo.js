@@ -14,11 +14,14 @@ import {PLAYBACK, PLAY, VOLUME, DARK, SONG_ERROR} from '../../constants/en';
 import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
+import Slider, {SliderProps} from '@react-native-community/slider';
 
 export function SongInfo() {
+  console.log(value);
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
   const [playing, setPlaying] = useState(false);
+  const [value, setValue] = useState(0);
   Sound.setCategory(PLAYBACK);
   const route = useRoute();
   const sound = useMemo(() => {
@@ -95,6 +98,14 @@ export function SongInfo() {
           }>
           {route.params.item.artist}
         </Text>
+        <Slider
+          step={5}
+          minimumValue={1}
+          maximumValue={30}
+          style={styles.slider}
+          value={value}
+          onValueChange={value => sound.setCurrentTime(value)}
+        />
         <View style={styles.playerContainer}>
           <Button
             style={styles.itemPlayStyle}
