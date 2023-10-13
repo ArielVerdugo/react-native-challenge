@@ -5,9 +5,10 @@ import {
   SafeAreaView,
   Button,
   Alert,
+  Pressable,
   useColorScheme,
 } from 'react-native';
-import {PlayIcon, play} from '../../assets/images';
+import {PlayIcon, RewindIcon, ForwardIcon} from '../../assets/images';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Sound from 'react-native-sound';
 import {PLAYBACK, PLAY, VOLUME, DARK, SONG_ERROR} from '../../constants/en';
@@ -104,27 +105,30 @@ export function SongInfo() {
           maximumValue={30}
           style={styles.slider}
           value={value}
-          onValueChange={value => sound.setCurrentTime(value)}
+          onValueChange={time => sound.setCurrentTime(time)}
         />
         <View style={styles.playerContainer}>
-          <Button
-            style={styles.itemPlayStyle}
-            accessibilityIgnoresInvertColors={true}
-            title={'-10'}
-            onPress={jumpPrev15Seconds}
-          />
-          <Button
-            style={styles.itemPlayStyle}
-            accessibilityIgnoresInvertColors={true}
-            title={playing ? 'Stop' : 'Play'}
-            onPress={playPause}
-          />
-          <Button
-            style={styles.itemPlayStyle}
-            accessibilityIgnoresInvertColors={true}
-            title={'+10'}
-            onPress={jumpNext15Seconds}
-          />
+          <Pressable onPress={jumpPrev15Seconds}>
+            <Image
+              style={styles.itemRewindForwardStyle}
+              accessibilityIgnoresInvertColors={true}
+              source={RewindIcon}
+            />
+          </Pressable>
+          <Pressable onPress={playPause}>
+            <Image
+              style={styles.itemPlayStyle}
+              accessibilityIgnoresInvertColors={true}
+              source={PlayIcon}
+            />
+          </Pressable>
+          <Pressable onPress={jumpNext15Seconds}>
+            <Image
+              style={styles.itemRewindForwardStyle}
+              accessibilityIgnoresInvertColors={true}
+              source={ForwardIcon}
+            />
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>

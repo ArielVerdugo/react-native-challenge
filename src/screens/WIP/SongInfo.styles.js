@@ -28,7 +28,13 @@ export const styles = StyleSheet.create({
     marginTop: 15,
   },
   itemPlayStyle: {
-    padding: 10,
+    width: 60,
+    height: 60,
+  },
+  itemRewindForwardStyle: {
+    width: 40,
+    height: 40,
+    marginTop: 5,
   },
   slider: {
     width: 320,
