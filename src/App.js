@@ -11,6 +11,8 @@ import {StatusBar, LogBox} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {MainStack} from './components/Navigation/AppNavigation';
+import {Provider} from 'react-redux';
+import {Store} from './redux/Store';
 
 const App = () => {
 
@@ -18,12 +20,14 @@ const App = () => {
   const queryClient = new QueryClient();
 
   return (
-    <NavigationContainer>
-      <QueryClientProvider client={queryClient}>
-        <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-        <MainStack />
-      </QueryClientProvider>
-    </NavigationContainer>
+    <Provider store={Store}>
+      <NavigationContainer>
+        <QueryClientProvider client={queryClient}>
+          <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+          <MainStack />
+        </QueryClientProvider>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
