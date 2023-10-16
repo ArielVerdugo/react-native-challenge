@@ -3,7 +3,7 @@ import {
   View,
   Image,
   SafeAreaView,
-  Button,
+  ScrollView,
   Alert,
   Pressable,
   useColorScheme,
@@ -16,6 +16,8 @@ import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
 import Slider, {SliderProps} from '@react-native-community/slider';
+import {useDispatch, useSelector} from 'react-redux';
+import {showSoundBar} from '../../redux/Actions';
 
 export function SongInfo() {
   console.log(value);
@@ -25,6 +27,7 @@ export function SongInfo() {
   const [value, setValue] = useState(0);
   Sound.setCategory(PLAYBACK);
   const route = useRoute();
+  const dispatch = useDispatch();
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
@@ -42,16 +45,27 @@ export function SongInfo() {
     };
   });
 
-  const playSong = useCallback(playPause, [sound]);
-
   const playPause = () => {
     if (sound.isPlaying()) {
       sound.pause();
-      console.log('entro pause');
       setPlaying(false);
+      dispatch(
+        showSoundBar({
+          show: false,
+          sound: sound,
+        }),
+      );
     } else {
       sound.play();
-      console.log('entro play');
+      dispatch(
+        showSoundBar({
+          trackName: route.params.item.trackName,
+          preview: route.params.item.preview,
+          artwork: route.params.item.artwork,
+          show: true,
+          sound: sound,
+        }),
+      );
       //setPlaying(true);
     }
   };
@@ -99,14 +113,6 @@ export function SongInfo() {
           }>
           {route.params.item.artist}
         </Text>
-        <Slider
-          step={5}
-          minimumValue={1}
-          maximumValue={30}
-          style={styles.slider}
-          value={value}
-          onValueChange={time => sound.setCurrentTime(time)}
-        />
         <View style={styles.playerContainer}>
           <Pressable onPress={jumpPrev15Seconds}>
             <Image
