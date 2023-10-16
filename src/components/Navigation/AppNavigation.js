@@ -15,6 +15,7 @@ import Player from '../../screens/Player/Player';
 import Search from '../../screens/WIP/Search';
 import {SearchNavigator} from './SearchNavigator';
 import {DARK} from '../../constants/en';
+import {MusicPlayer} from '../Song/MusicPlayer/MusicPlayer';
 
 const IS_IOS = Platform.OS === 'ios';
 
@@ -99,49 +100,52 @@ const BottomTabNavigator = () => {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
   return (
-    <Tab.Navigator
-      initialRouteName="Library"
-      screenOptions={{
-        headerShown: false,
-        tabBarLabelStyle: styles.tabBarLabel,
-        tabBarActiveTintColor: PRIMARY_COLOR,
-        tabBarInactiveTintColor: INACTIVE_COLOR,
-        tabBarStyle: isDarkTheme === true ? styles.tabBarDark : styles.tabBar,
-      }}>
-      <Tab.Screen
-        name="ListenNow"
-        component={Search}
-        options={{
-          tabBarIcon: PlayNowIcon,
-          title: 'Listen Now',
-        }}
-      />
-      <Tab.Screen
-        name="Explore"
-        component={Search}
-        options={{
-          tabBarIcon: ExploreIcon,
-          title: 'Explore',
-        }}
-      />
-      <Tab.Screen
-        name="Radio"
-        component={Search}
-        options={{
-          tabBarIcon: RadioIcon,
-          title: 'Radio',
-        }}
-      />
-      <Tab.Screen
-        name="Library"
-        component={Home}
-        options={{
-          tabBarIcon: LibraryIcon,
-          title: 'Library',
-        }}
-      />
-      <Tab.Screen name="Search" component={SearchNavigator} />
-    </Tab.Navigator>
+    <>
+      <Tab.Navigator
+        initialRouteName="Library"
+        screenOptions={{
+          headerShown: false,
+          tabBarLabelStyle: styles.tabBarLabel,
+          tabBarActiveTintColor: PRIMARY_COLOR,
+          tabBarInactiveTintColor: INACTIVE_COLOR,
+          tabBarStyle: isDarkTheme === true ? styles.tabBarDark : styles.tabBar,
+        }}>
+        <Tab.Screen
+          name="ListenNow"
+          component={Search}
+          options={{
+            tabBarIcon: PlayNowIcon,
+            title: 'Listen Now',
+          }}
+        />
+        <Tab.Screen
+          name="Explore"
+          component={Search}
+          options={{
+            tabBarIcon: ExploreIcon,
+            title: 'Explore',
+          }}
+        />
+        <Tab.Screen
+          name="Radio"
+          component={Search}
+          options={{
+            tabBarIcon: RadioIcon,
+            title: 'Radio',
+          }}
+        />
+        <Tab.Screen
+          name="Library"
+          component={Home}
+          options={{
+            tabBarIcon: LibraryIcon,
+            title: 'Library',
+          }}
+        />
+        <Tab.Screen name="Search" component={SearchNavigator} />
+      </Tab.Navigator>
+      <MusicPlayer />
+    </>
   );
 };
 

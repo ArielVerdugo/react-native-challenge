@@ -20,14 +20,15 @@ import {
 import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
-
-Sound.setCategory(PLAYBACK);
+import {useDispatch, useSelector} from 'react-redux';
+import {showSoundBar} from '../../redux/Actions';
 
 export function SongInfo() {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
   const [playing, setPlaying] = useState(false);
   const route = useRoute();
+  const dispatch = useDispatch();
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
@@ -48,11 +49,24 @@ export function SongInfo() {
   const playPause = () => {
     if (sound.isPlaying()) {
       sound.pause();
-      console.log('entro pause');
       setPlaying(false);
+      dispatch(
+        showSoundBar({
+          show: false,
+          sound: sound,
+        }),
+      );
     } else {
       sound.play();
-      console.log('entro play');
+      dispatch(
+        showSoundBar({
+          trackName: route.params.item.trackName,
+          preview: route.params.item.preview,
+          artwork: route.params.item.artwork,
+          show: true,
+          sound: sound,
+        }),
+      );
       //setPlaying(true);
     }
   };

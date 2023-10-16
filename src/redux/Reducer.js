@@ -1,3 +1,5 @@
 export const soundBarReducer = (state = [], action) => {
-  return state;
+  const arr = [];
+  arr.push(action.payload);
+  return arr;
 };
