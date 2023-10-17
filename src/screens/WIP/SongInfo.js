@@ -3,27 +3,23 @@ import {
   View,
   Image,
   SafeAreaView,
-  Button,
   Alert,
   Pressable,
   useColorScheme,
 } from 'react-native';
 import {PlayIcon, RewindIcon, ForwardIcon} from '../../assets/images';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import Sound from 'react-native-sound';
-import {PLAYBACK, PLAY, VOLUME, DARK, SONG_ERROR} from '../../constants/en';
+import {PLAYBACK, VOLUME, DARK, SONG_ERROR} from '../../constants/en';
 import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
-import Slider, {SliderProps} from '@react-native-community/slider';
+
+Sound.setCategory(PLAYBACK);
 
 export function SongInfo() {
-  console.log(value);
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
-  const [playing, setPlaying] = useState(false);
-  const [value, setValue] = useState(0);
-  Sound.setCategory(PLAYBACK);
   const route = useRoute();
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
@@ -42,18 +38,8 @@ export function SongInfo() {
     };
   });
 
-  const playSong = useCallback(playPause, [sound]);
-
   const playPause = () => {
-    if (sound.isPlaying()) {
-      sound.pause();
-      console.log('entro pause');
-      setPlaying(false);
-    } else {
-      sound.play();
-      console.log('entro play');
-      //setPlaying(true);
-    }
+    sound.isPlaying() ? sound.pause() : sound.play();
   };
   const jumpPrev15Seconds = () => {
     jumpSeconds(-10);
@@ -99,14 +85,6 @@ export function SongInfo() {
           }>
           {route.params.item.artist}
         </Text>
-        <Slider
-          step={5}
-          minimumValue={1}
-          maximumValue={30}
-          style={styles.slider}
-          value={value}
-          onValueChange={time => sound.setCurrentTime(time)}
-        />
         <View style={styles.playerContainer}>
           <Pressable onPress={jumpPrev15Seconds}>
             <Image
@@ -119,7 +97,7 @@ export function SongInfo() {
             <Image
               style={styles.itemPlayStyle}
               accessibilityIgnoresInvertColors={true}
-              source={PlayIcon}
+              source={sound.isPlaying() ? ForwardIcon : PlayIcon}
             />
           </Pressable>
           <Pressable onPress={jumpNext15Seconds}>
