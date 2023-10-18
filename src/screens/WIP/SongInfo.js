@@ -15,7 +15,6 @@ import {PLAYBACK, PLAY, VOLUME, DARK, SONG_ERROR} from '../../constants/en';
 import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
-import Slider, {SliderProps} from '@react-native-community/slider';
 import {useDispatch, useSelector} from 'react-redux';
 import {showSoundBar} from '../../redux/Actions';
 
@@ -25,12 +24,12 @@ export function SongInfo() {
   const isDarkTheme = theme === DARK;
   const [playing, setPlaying] = useState(false);
   const [value, setValue] = useState(0);
-  Sound.setCategory(PLAYBACK);
   const route = useRoute();
   const dispatch = useDispatch();
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
+        console.log(error.message);
         Alert.alert(SONG_ERROR, [
           {text: 'OK', onPress: () => console.log(error.message)},
         ]);
@@ -40,9 +39,6 @@ export function SongInfo() {
 
   useEffect(() => {
     sound.setVolume(VOLUME);
-    return () => {
-      sound.release();
-    };
   });
 
   const playPause = () => {
