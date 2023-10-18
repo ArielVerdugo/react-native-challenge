@@ -16,6 +16,7 @@ import Search from '../../screens/WIP/Search';
 import {SearchNavigator} from './SearchNavigator';
 import {DARK} from '../../constants/en';
 import {MusicPlayer} from '../Song/MusicPlayer/MusicPlayer';
+import {useNavigation} from '@react-navigation/native';
 
 const IS_IOS = Platform.OS === 'ios';
 
@@ -99,12 +100,14 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
+  const navigation = useNavigation();
+
   return (
     <>
       <Tab.Navigator
         initialRouteName="Library"
         screenOptions={{
-          headerShown: false,
+          headerShown: true,
           tabBarLabelStyle: styles.tabBarLabel,
           tabBarActiveTintColor: PRIMARY_COLOR,
           tabBarInactiveTintColor: INACTIVE_COLOR,

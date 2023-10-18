@@ -32,6 +32,7 @@ export function SongInfo() {
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
+        console.log(error.message);
         Alert.alert(SONG_ERROR, [
           {text: 'OK', onPress: () => console.log(error.message)},
         ]);
@@ -41,9 +42,6 @@ export function SongInfo() {
 
   useEffect(() => {
     sound.setVolume(VOLUME);
-    return () => {
-      sound.release();
-    };
   });
 
   const playPause = () => {
