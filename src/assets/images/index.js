@@ -9,6 +9,7 @@ import Album8 from './albums/8.png';
 import PlayIcon from './icons/icon_play.png';
 import RewindIcon from './icons/icon_rewind.png';
 import ForwardIcon from './icons/icon_forward.png';
+import PauseIcon from './icons/icon_pause.png';
 
 export {
   Album1,
@@ -22,4 +23,5 @@ export {
   PlayIcon,
   RewindIcon,
   ForwardIcon,
+  PauseIcon,
 };

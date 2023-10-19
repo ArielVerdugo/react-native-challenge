@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, Image, Pressable} from 'react-native';
-import {RewindIcon, PlayIcon} from '../../../assets/images';
+import {PauseIcon, PlayIcon} from '../../../assets/images';
 import {useSelector} from 'react-redux';
 import {getSoundBar} from '../../../redux/SoundBarSelector';
 import {useNavigationState} from '@react-navigation/native';
@@ -8,13 +8,20 @@ import {styles} from './MusicPlayer.styles';
 
 export const MusicPlayer = () => {
   const soundBar = useSelector(getSoundBar);
+  const [isPlaying, setIsPlaying] = useState(false);
   const sound = soundBar[0]?.sound;
   var index = useNavigationState(
     state => state?.routes[0]?.state?.routes[4]?.state?.index,
   );
 
   const playPause = () => {
-    sound.isPlaying() ? sound.pause() : sound.play();
+    if (sound.isPlaying()) {
+      setIsPlaying(false);
+      sound.pause();
+    } else {
+      setIsPlaying(true);
+      sound.play();
+    }
   };
 
   if (soundBar[0]?.show && index !== 1) {
@@ -30,7 +37,7 @@ export const MusicPlayer = () => {
           <Image
             style={styles.itemPlayStyle}
             accessibilityIgnoresInvertColors={true}
-            source={PlayIcon}
+            source={isPlaying ? PauseIcon : PlayIcon}
           />
         </Pressable>
       </View>
