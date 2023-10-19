@@ -41,16 +41,16 @@ export function SongInfo() {
   const playPause = () => {
     sound.isPlaying() ? sound.pause() : sound.play();
   };
-  const jumpPrev15Seconds = () => {
+  const jumpPrev10Seconds = () => {
     jumpSeconds(-10);
   };
-  const jumpNext15Seconds = () => {
+  const jumpNext10Seconds = () => {
     jumpSeconds(10);
   };
 
   const jumpSeconds = secondsToJump => {
     sound.getCurrentTime(seconds => {
-      var time = seconds + secondsToJump;
+      let time = seconds + secondsToJump;
       if (time < 0) {
         time = 0;
       } else if (time > sound.getDuration) {
@@ -62,31 +62,23 @@ export function SongInfo() {
 
   return (
     <SafeAreaView
-      style={
-        isDarkTheme === true ? stylesDark.containerDark : styles.container
-      }>
+      style={isDarkTheme ? stylesDark.containerDark : styles.container}>
       <View>
         <View>
           <Image
             style={styles.imageHeader}
             accessibilityIgnoresInvertColors={true}
-            source={{uri: `${route.params.item.artwork}`}}
+            source={{uri: route.params.item.artwork}}
           />
         </View>
-        <Text
-          style={
-            isDarkTheme === true ? stylesDark.textTitleDark : styles.textTitle
-          }>
+        <Text style={isDarkTheme ? stylesDark.textTitleDark : styles.textTitle}>
           {route.params.item.trackName}
         </Text>
-        <Text
-          style={
-            isDarkTheme === true ? stylesDark.textTitleDark : styles.textTitle
-          }>
+        <Text style={isDarkTheme ? stylesDark.textTitleDark : styles.textTitle}>
           {route.params.item.artist}
         </Text>
         <View style={styles.playerContainer}>
-          <Pressable onPress={jumpPrev15Seconds}>
+          <Pressable onPress={jumpPrev10Seconds}>
             <Image
               style={styles.itemRewindForwardStyle}
               accessibilityIgnoresInvertColors={true}
@@ -100,7 +92,7 @@ export function SongInfo() {
               source={sound.isPlaying() ? ForwardIcon : PlayIcon}
             />
           </Pressable>
-          <Pressable onPress={jumpNext15Seconds}>
+          <Pressable onPress={jumpNext10Seconds}>
             <Image
               style={styles.itemRewindForwardStyle}
               accessibilityIgnoresInvertColors={true}
