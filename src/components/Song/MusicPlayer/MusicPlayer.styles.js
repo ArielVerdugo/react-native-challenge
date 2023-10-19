@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   songTitle: {
-    fontSize: 18,
+    fontSize: 16,
     marginTop: 13,
     color: 'white',
     fontWeight: 'bold',

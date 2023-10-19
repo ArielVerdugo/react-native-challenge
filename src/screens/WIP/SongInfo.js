@@ -7,8 +7,13 @@ import {
   Pressable,
   useColorScheme,
 } from 'react-native';
-import {PlayIcon, RewindIcon, ForwardIcon} from '../../assets/images';
-import React, {useEffect, useMemo, useState} from 'react';
+import {
+  PlayIcon,
+  RewindIcon,
+  ForwardIcon,
+  PauseIcon,
+} from '../../assets/images';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Sound from 'react-native-sound';
 import {
   PLAYBACK,
@@ -26,9 +31,10 @@ import {showSoundBar} from '../../redux/Actions';
 export function SongInfo() {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
-  const [playing, setPlaying] = useState(false);
+  const [isPlaying, setPlaying] = useState(false);
   const route = useRoute();
   const dispatch = useDispatch();
+  var show = false;
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
@@ -46,27 +52,24 @@ export function SongInfo() {
 
   const playPause = () => {
     if (sound.isPlaying()) {
-      sound.pause();
+      show = false;
       setPlaying(false);
-      dispatch(
-        showSoundBar({
-          show: false,
-          sound: sound,
-        }),
-      );
+      sound.pause();
     } else {
+      show = true;
+      setPlaying(true);
       sound.play();
-      dispatch(
-        showSoundBar({
-          trackName: route.params.item.trackName,
-          preview: route.params.item.preview,
-          artwork: route.params.item.artwork,
-          show: true,
-          sound: sound,
-        }),
-      );
-      //setPlaying(true);
     }
+    dispatch(
+      showSoundBar({
+        trackName: route.params.item.trackName,
+        preview: route.params.item.preview,
+        artwork: route.params.item.artwork,
+        artist: route.params.item.artist,
+        sound: sound,
+        show: show,
+      }),
+    );
   };
   const jumpPrev10Seconds = () => {
     jumpSeconds(-JUMP_INTERVAL);
@@ -86,6 +89,17 @@ export function SongInfo() {
       sound.setCurrentTime(time);
     });
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      sound.getCurrentTime(seconds => {
+        if (seconds === 0) {
+          setPlaying(false);
+        }
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  });
 
   return (
     <SafeAreaView
@@ -116,7 +130,7 @@ export function SongInfo() {
             <Image
               style={styles.itemPlayStyle}
               accessibilityIgnoresInvertColors={true}
-              source={sound.isPlaying() ? ForwardIcon : PlayIcon}
+              source={isPlaying ? PauseIcon : PlayIcon}
             />
           </Pressable>
           <Pressable onPress={jumpNext10Seconds}>
