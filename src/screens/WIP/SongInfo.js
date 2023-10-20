@@ -15,12 +15,14 @@ import {
 } from '../../assets/images';
 import React, {useEffect, useMemo, useState} from 'react';
 import Sound from 'react-native-sound';
-import {VOLUME, DARK, SONG_ERROR} from '../../constants/en';
+import {VOLUME, DARK, SONG_ERROR, PLAYBACK} from '../../constants/en';
 import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
 import {useDispatch} from 'react-redux';
 import {showSoundBar} from '../../redux/Actions';
+
+Sound.setCategory(PLAYBACK);
 
 export function SongInfo() {
   const theme = useColorScheme();
@@ -28,11 +30,10 @@ export function SongInfo() {
   const [isPlaying, setPlaying] = useState(false);
   const route = useRoute();
   const dispatch = useDispatch();
-  var show = false;
+  var showSongBar = false;
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
-        console.log(error.message);
         Alert.alert(SONG_ERROR, [
           {text: 'OK', onPress: () => console.log(error.message)},
         ]);
@@ -46,11 +47,11 @@ export function SongInfo() {
 
   const playPause = () => {
     if (sound.isPlaying()) {
-      show = false;
+      showSongBar = false;
       setPlaying(false);
       sound.pause();
     } else {
-      show = true;
+      showSongBar = true;
       setPlaying(true);
       sound.play();
     }
@@ -61,7 +62,7 @@ export function SongInfo() {
         artwork: route.params.item.artwork,
         artist: route.params.item.artist,
         sound: sound,
-        show: show,
+        show: showSongBar,
       }),
     );
   };
