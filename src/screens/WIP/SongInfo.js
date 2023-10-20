@@ -10,7 +10,13 @@ import {
 import {PlayIcon, RewindIcon, ForwardIcon} from '../../assets/images';
 import React, {useEffect, useMemo} from 'react';
 import Sound from 'react-native-sound';
-import {PLAYBACK, VOLUME, DARK, SONG_ERROR} from '../../constants/en';
+import {
+  PLAYBACK,
+  VOLUME,
+  DARK,
+  SONG_ERROR,
+  JUMP_INTERVAL,
+} from '../../constants/en';
 import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
@@ -42,10 +48,10 @@ export function SongInfo() {
     sound.isPlaying() ? sound.pause() : sound.play();
   };
   const jumpPrev10Seconds = () => {
-    jumpSeconds(-10);
+    jumpSeconds(-JUMP_INTERVAL);
   };
   const jumpNext10Seconds = () => {
-    jumpSeconds(10);
+    jumpSeconds(JUMP_INTERVAL);
   };
 
   const jumpSeconds = secondsToJump => {
