@@ -3,7 +3,6 @@ import {
   View,
   Image,
   SafeAreaView,
-  ScrollView,
   Alert,
   Pressable,
   useColorScheme,
@@ -14,13 +13,13 @@ import {
   ForwardIcon,
   PauseIcon,
 } from '../../assets/images';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Sound from 'react-native-sound';
-import {PLAYBACK, PLAY, VOLUME, DARK, SONG_ERROR} from '../../constants/en';
+import {VOLUME, DARK, SONG_ERROR} from '../../constants/en';
 import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {showSoundBar} from '../../redux/Actions';
 
 export function SongInfo() {
