@@ -10,18 +10,18 @@ import {SONG_INFO_SCREEN} from '../../../constants/en';
 export const MusicPlayer = () => {
   const soundBarData = useSelector(getSoundBarData);
   const [isPlaying, setIsPlaying] = useState(true);
-  const songToPlay = soundBarData?.sound;
+  const searchedSong = soundBarData?.sound;
   const currentScreen = useNavigationState(
     state => state?.routes[0]?.state?.routes[4]?.state?.index,
   );
 
   const playPause = () => {
-    if (songToPlay.isPlaying()) {
+    if (searchedSong.isPlaying()) {
       setIsPlaying(false);
-      songToPlay.pause();
+      searchedSong.pause();
     } else {
       setIsPlaying(true);
-      songToPlay.play(success => {
+      searchedSong.play(success => {
         if (success) {
           setIsPlaying(false);
         }
