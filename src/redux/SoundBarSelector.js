@@ -1,3 +1,3 @@
-export const getSoundBar = state => {
-  return Object.values(state.soundBarReducer);
+export const getSoundBarData = state => {
+  return state.soundBarReducer;
 };

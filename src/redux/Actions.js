@@ -7,6 +7,6 @@ const soundBar = songData => ({
   payload: songData,
 });
 
-export const showSoundBar = songData => dispatch => {
+export const toggleSoundBar = songData => dispatch => {
   dispatch(soundBar(songData));
 };

@@ -26,7 +26,7 @@ import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
 import {useDispatch} from 'react-redux';
-import {showSoundBar} from '../../redux/Actions';
+import {toggleSoundBar} from '../../redux/Actions';
 
 Sound.setCategory(PLAYBACK);
 
@@ -36,7 +36,7 @@ export function SongInfo() {
   const [isPlaying, setPlaying] = useState(false);
   const route = useRoute();
   const dispatch = useDispatch();
-  var showSongBar = false;
+  var showSoundBar = false;
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
@@ -53,22 +53,23 @@ export function SongInfo() {
 
   const playPause = () => {
     if (sound.isPlaying()) {
-      showSongBar = false;
+      showSoundBar = false;
       setPlaying(false);
       sound.pause();
     } else {
-      showSongBar = true;
+      showSoundBar = true;
       setPlaying(true);
       sound.play();
     }
+    const {trackName, preview, artwork, artist} = route.params.item;
     dispatch(
-      showSoundBar({
-        trackName: route.params.item.trackName,
-        preview: route.params.item.preview,
-        artwork: route.params.item.artwork,
-        artist: route.params.item.artist,
+      toggleSoundBar({
+        trackName: trackName,
+        preview: preview,
+        artwork: artwork,
+        artist: artist,
         sound: sound,
-        show: showSongBar,
+        showSoundBar: showSoundBar,
       }),
     );
   };

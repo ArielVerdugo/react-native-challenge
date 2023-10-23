@@ -2,35 +2,38 @@ import React, {useState, useEffect} from 'react';
 import {Text, View, Image, Pressable} from 'react-native';
 import {PauseIcon, PlayIcon} from '../../../assets/images';
 import {useSelector} from 'react-redux';
-import {getSoundBar} from '../../../redux/SoundBarSelector';
+import {getSoundBarData} from '../../../redux/SoundBarSelector';
 import {useNavigationState} from '@react-navigation/native';
 import {styles} from './MusicPlayer.styles';
+import {SONG_INFO_SCREEN} from '../../../constants/en';
 
 export const MusicPlayer = () => {
-  const soundBar = useSelector(getSoundBar);
+  const soundBarData = useSelector(getSoundBarData);
   const [isPlaying, setIsPlaying] = useState(true);
-  const sound = soundBar[0]?.sound;
-  var index = useNavigationState(
+  const songToPlay = soundBarData?.sound;
+  const currentScreen = useNavigationState(
     state => state?.routes[0]?.state?.routes[4]?.state?.index,
   );
 
+  console.log(soundBarData);
+
   const playPause = () => {
-    if (sound.isPlaying()) {
+    if (songToPlay.isPlaying()) {
       setIsPlaying(false);
-      sound.pause();
+      songToPlay.pause();
     } else {
       setIsPlaying(true);
-      sound.play();
+      songToPlay.play();
     }
   };
 
-  if (sound?.getDuration === 0) {
+  if (songToPlay?.getDuration === 0) {
     setIsPlaying(false);
   }
 
   useEffect(() => {
     const interval = setInterval(() => {
-      sound?.getCurrentTime(seconds => {
+      songToPlay?.getCurrentTime(seconds => {
         if (seconds === 0) {
           setIsPlaying(false);
         }
@@ -39,16 +42,16 @@ export const MusicPlayer = () => {
     return () => clearInterval(interval);
   });
 
-  if (soundBar[0]?.show && index !== 1) {
+  if (soundBarData?.showSoundBar && currentScreen !== SONG_INFO_SCREEN) {
     return (
       <View style={styles.container}>
         <Image
           style={styles.songImage}
           accessibilityIgnoresInvertColors={true}
-          source={{uri: soundBar[0].artwork}}
+          source={{uri: soundBarData.artwork}}
         />
         <Text style={styles.songTitle}>
-          {soundBar[0].trackName + ' - ' + soundBar[0].artist}
+          {soundBarData.trackName + ' - ' + soundBarData.artist}
         </Text>
         <Pressable onPress={playPause}>
           <Image
