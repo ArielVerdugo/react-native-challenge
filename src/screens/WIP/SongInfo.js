@@ -36,7 +36,7 @@ export function SongInfo() {
   const [isPlaying, setPlaying] = useState(false);
   const route = useRoute();
   const dispatch = useDispatch();
-  var showSoundBar = false;
+  let showSoundBar = false;
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
