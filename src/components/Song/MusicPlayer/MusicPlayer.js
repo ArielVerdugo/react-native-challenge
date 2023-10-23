@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import {getSoundBarData} from '../../../redux/SoundBarSelector';
 import {useNavigationState} from '@react-navigation/native';
 import {styles} from './MusicPlayer.styles';
-import {SONG_INFO_SCREEN} from '../../../constants/en';
+import {SONG_INFO_SCREEN, ZERO_SECONDS} from '../../../constants/en';
 
 export const MusicPlayer = () => {
   const soundBarData = useSelector(getSoundBarData);
@@ -15,32 +15,19 @@ export const MusicPlayer = () => {
     state => state?.routes[0]?.state?.routes[4]?.state?.index,
   );
 
-  console.log(soundBarData);
-
   const playPause = () => {
     if (songToPlay.isPlaying()) {
       setIsPlaying(false);
       songToPlay.pause();
     } else {
       setIsPlaying(true);
-      songToPlay.play();
-    }
-  };
-
-  if (songToPlay?.getDuration === 0) {
-    setIsPlaying(false);
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      songToPlay?.getCurrentTime(seconds => {
-        if (seconds === 0) {
+      songToPlay.play(success => {
+        if (success) {
           setIsPlaying(false);
         }
       });
-    }, 1000);
-    return () => clearInterval(interval);
-  });
+    }
+  };
 
   if (soundBarData?.showSoundBar && currentScreen !== SONG_INFO_SCREEN) {
     return (

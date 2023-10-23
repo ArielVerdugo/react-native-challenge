@@ -59,7 +59,11 @@ export function SongInfo() {
     } else {
       showSoundBar = true;
       setPlaying(true);
-      sound.play();
+      sound.play(success => {
+        if (success) {
+          setPlaying(false);
+        }
+      });
     }
     const {trackName, preview, artwork, artist} = route.params.item;
     dispatch(
@@ -91,17 +95,6 @@ export function SongInfo() {
       sound.setCurrentTime(time);
     });
   };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      sound.getCurrentTime(seconds => {
-        if (seconds === 0) {
-          setPlaying(false);
-        }
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  });
 
   return (
     <SafeAreaView
