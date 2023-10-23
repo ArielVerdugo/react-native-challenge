@@ -1,9 +1,9 @@
 export const TYPES = {
-  SHOW_SOUND_BAR: 'SHOW_SOUND_BAR',
+  TOGGLE_SOUND_BAR: 'TOGGLE_SOUND_BAR',
 };
 
 const soundBar = songData => ({
-  type: TYPES.SHOW_SOUND_BAR,
+  type: TYPES.TOGGLE_SOUND_BAR,
   payload: songData,
 });
 

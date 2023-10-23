@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import {getSoundBarData} from '../../../redux/SoundBarSelector';
 import {useNavigationState} from '@react-navigation/native';
 import {styles} from './MusicPlayer.styles';
-import {SONG_INFO_SCREEN, ZERO_SECONDS} from '../../../constants/en';
+import {SONG_INFO_SCREEN} from '../../../constants/en';
 
 export const MusicPlayer = () => {
   const soundBarData = useSelector(getSoundBarData);
