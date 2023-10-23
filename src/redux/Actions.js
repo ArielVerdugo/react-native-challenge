@@ -2,11 +2,11 @@ export const TYPES = {
   TOGGLE_SOUND_BAR: 'TOGGLE_SOUND_BAR',
 };
 
-const soundBar = songData => ({
+const soundBar = soundBarData => ({
   type: TYPES.TOGGLE_SOUND_BAR,
-  payload: songData,
+  payload: soundBarData,
 });
 
-export const toggleSoundBar = songData => dispatch => {
-  dispatch(soundBar(songData));
+export const toggleSoundBar = soundBarData => dispatch => {
+  dispatch(soundBar(soundBarData));
 };

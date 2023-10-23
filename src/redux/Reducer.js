@@ -3,13 +3,15 @@ import {TYPES} from './Actions';
 export const soundBarReducer = (state = [], action) => {
   switch (action.type) {
     case TYPES.TOGGLE_SOUND_BAR:
+      const {trackName, preview, artwork, artist, sound, showSoundBar} =
+        action.payload;
       const soundBarData = {
-        trackName: action.payload?.trackName,
-        preview: action.payload?.preview,
-        artwork: action.payload?.artwork,
-        artist: action.payload?.artist,
-        sound: action.payload?.sound,
-        showSoundBar: action.payload?.showSoundBar,
+        trackName: trackName,
+        preview: preview,
+        artwork: artwork,
+        artist: artist,
+        sound: sound,
+        showSoundBar: showSoundBar,
       };
       return soundBarData;
     default:
