@@ -34,9 +34,9 @@ export function SongInfo() {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
   const [isPlaying, setPlaying] = useState(false);
+  const [showSoundBar, setShowSoundBar] = useState(true);
   const route = useRoute();
   const dispatch = useDispatch();
-  let showSoundBar = false;
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
@@ -53,11 +53,11 @@ export function SongInfo() {
 
   const playPause = () => {
     if (sound.isPlaying()) {
-      showSoundBar = false;
+      setShowSoundBar(true);
       setPlaying(false);
       sound.pause();
     } else {
-      showSoundBar = true;
+      setShowSoundBar(false);
       setPlaying(true);
       sound.play(success => {
         if (success) {
