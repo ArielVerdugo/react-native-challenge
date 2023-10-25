@@ -7,26 +7,36 @@ import {
   Pressable,
   useColorScheme,
 } from 'react-native';
-import {PlayIcon, RewindIcon, ForwardIcon} from '../../assets/images';
-import React, {useEffect, useMemo} from 'react';
+import {
+  PlayIcon,
+  RewindIcon,
+  ForwardIcon,
+  PauseIcon,
+} from '../../assets/images';
+import React, {useEffect, useMemo, useState} from 'react';
 import Sound from 'react-native-sound';
 import {
-  PLAYBACK,
   VOLUME,
   DARK,
   SONG_ERROR,
+  PLAYBACK,
   JUMP_INTERVAL,
 } from '../../constants/en';
 import {styles} from './SongInfo.styles';
 import {useRoute} from '@react-navigation/native';
 import {stylesDark} from './SongInfoDark.styles';
+import {useDispatch} from 'react-redux';
+import {toggleSoundBar} from '../../redux/Actions';
 
 Sound.setCategory(PLAYBACK);
 
 export function SongInfo() {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
+  const [isPlaying, setPlaying] = useState(false);
+  const [showSoundBar, setShowSoundBar] = useState(true);
   const route = useRoute();
+  const dispatch = useDispatch();
   const sound = useMemo(() => {
     return new Sound(route.params.item.preview, null, error => {
       if (error) {
@@ -39,13 +49,33 @@ export function SongInfo() {
 
   useEffect(() => {
     sound.setVolume(VOLUME);
-    return () => {
-      sound.release();
-    };
   });
 
   const playPause = () => {
-    sound.isPlaying() ? sound.pause() : sound.play();
+    if (sound.isPlaying()) {
+      setShowSoundBar(true);
+      setPlaying(false);
+      sound.pause();
+    } else {
+      setShowSoundBar(false);
+      setPlaying(true);
+      sound.play(success => {
+        if (success) {
+          setPlaying(false);
+        }
+      });
+    }
+    const {trackName, preview, artwork, artist} = route.params.item;
+    dispatch(
+      toggleSoundBar({
+        trackName: trackName,
+        preview: preview,
+        artwork: artwork,
+        artist: artist,
+        sound: sound,
+        showSoundBar: showSoundBar,
+      }),
+    );
   };
   const jumpPrev10Seconds = () => {
     jumpSeconds(-JUMP_INTERVAL);
@@ -95,7 +125,7 @@ export function SongInfo() {
             <Image
               style={styles.itemPlayStyle}
               accessibilityIgnoresInvertColors={true}
-              source={sound.isPlaying() ? ForwardIcon : PlayIcon}
+              source={isPlaying ? PauseIcon : PlayIcon}
             />
           </Pressable>
           <Pressable onPress={jumpNext10Seconds}>

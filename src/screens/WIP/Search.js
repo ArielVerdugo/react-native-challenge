@@ -40,7 +40,6 @@ const Search = ({darkModeEnabled, navigation}) => {
     );
   };
   const getItem = item => {
-    console.log(item);
     navigation.navigate('Song Info', {item: item});
   };
 

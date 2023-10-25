@@ -6,3 +6,4 @@ export const VOLUME = 1;
 export const DARK = 'dark';
 export const SONG_ERROR = 'Canción no disponible';
 export const JUMP_INTERVAL = 10;
+export const SONG_INFO_SCREEN = 'Song Info';
