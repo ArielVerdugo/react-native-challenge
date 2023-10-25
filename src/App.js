@@ -6,9 +6,12 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {StatusBar, LogBox} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  createNavigationContainerRef,
+} from '@react-navigation/native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {MainStack} from './components/Navigation/AppNavigation';
 import {Provider} from 'react-redux';
@@ -19,12 +22,23 @@ const App = () => {
   LogBox.ignoreAllLogs();
   const queryClient = new QueryClient();
 
+  const navigationRef = createNavigationContainerRef();
+  const [routeName, setRouteName] = useState();
+
   return (
     <Provider store={Store}>
-      <NavigationContainer>
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={() => {
+          setRouteName(navigationRef.getCurrentRoute().name);
+        }}
+        onStateChange={async () => {
+          const currentRouteName = navigationRef.getCurrentRoute().name;
+          setRouteName(currentRouteName);
+        }}>
         <QueryClientProvider client={queryClient}>
           <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-          <MainStack />
+          <MainStack routeName={routeName} />
         </QueryClientProvider>
       </NavigationContainer>
     </Provider>

@@ -16,7 +16,6 @@ import Search from '../../screens/WIP/Search';
 import {SearchNavigator} from './SearchNavigator';
 import {DARK} from '../../constants/en';
 import {MusicPlayer} from '../Song/MusicPlayer/MusicPlayer';
-import {useNavigation} from '@react-navigation/native';
 
 const IS_IOS = Platform.OS === 'ios';
 
@@ -62,14 +61,13 @@ const SearchIcon = ({focused}) => (
 
 const Stack = createNativeStackNavigator();
 
-const MainStack = () => {
+const MainStack = props => {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Home"
-        component={BottomTabNavigator}
         options={{
           headerRight: () => <Text style={styles.headerRight}>Edit</Text>,
           headerLargeTitle: true,
@@ -80,8 +78,9 @@ const MainStack = () => {
           headerTitleStyle: {
             color: isDarkTheme ? 'white' : '#212529',
           },
-        }}
-      />
+        }}>
+        {() => <BottomTabNavigator {...props} />}
+      </Stack.Screen>
       <Stack.Screen
         name="Player"
         component={Player}
@@ -97,10 +96,9 @@ const MainStack = () => {
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator = route => {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
-  const navigation = useNavigation();
 
   return (
     <>
@@ -147,7 +145,7 @@ const BottomTabNavigator = () => {
         />
         <Tab.Screen name="Search" component={SearchNavigator} />
       </Tab.Navigator>
-      <MusicPlayer />
+      <MusicPlayer route={route} />
     </>
   );
 };
