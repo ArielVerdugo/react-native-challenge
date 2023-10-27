@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Platform, Text, useColorScheme} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -99,6 +99,7 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = route => {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
+  const [song, setSong] = useState();
 
   return (
     <>
@@ -143,9 +144,11 @@ const BottomTabNavigator = route => {
             title: 'Library',
           }}
         />
-        <Tab.Screen name="Search" component={SearchNavigator} />
+        <Tab.Screen name="Search">
+          {() => <SearchNavigator setSong={setSong} />}
+        </Tab.Screen>
       </Tab.Navigator>
-      <MusicPlayer route={route} />
+      <MusicPlayer route={route} song={song} />
     </>
   );
 };

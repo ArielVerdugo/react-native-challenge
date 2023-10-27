@@ -7,7 +7,7 @@ import {SongInfo} from '../../screens/WIP/SongInfo';
 
 const Stack = createNativeStackNavigator();
 
-export function SearchNavigator() {
+export function SearchNavigator(setSong) {
   const SearchIcon = ({focused}) => (
     <Icon
       name="magnify"
@@ -27,15 +27,15 @@ export function SearchNavigator() {
         }}
       />
       <Stack.Screen
-        component={SongInfo}
         name="Song Info"
         options={{
           title: 'Song Info',
           headerShown: false,
           animationTypeForReplace: 'push',
           animation: 'slide_from_bottom',
-        }}
-      />
+        }}>
+        {() => <SongInfo setSong={setSong} />}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }
