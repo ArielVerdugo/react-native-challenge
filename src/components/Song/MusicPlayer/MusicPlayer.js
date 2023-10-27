@@ -6,10 +6,10 @@ import {getSoundBarData} from '../../../redux/SoundBarSelector';
 import {styles} from './MusicPlayer.styles';
 import {SONG_INFO_SCREEN} from '../../../constants/en';
 
-export const MusicPlayer = ({route}) => {
+export const MusicPlayer = ({route, song}) => {
   const soundBarData = useSelector(getSoundBarData);
   const [isPlaying, setIsPlaying] = useState(true);
-  const songToPlay = soundBarData?.sound;
+  const songToPlay = song;
   const currentScreen = route.routeName;
 
   const playPause = () => {
