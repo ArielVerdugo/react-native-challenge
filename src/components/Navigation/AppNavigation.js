@@ -144,9 +144,10 @@ const BottomTabNavigator = route => {
             title: 'Library',
           }}
         />
-        <Tab.Screen name="Search">
-          {() => <SearchNavigator setSong={setSong} />}
-        </Tab.Screen>
+        <Tab.Screen
+          name="Search"
+          children={() => <SearchNavigator setSong={setSong} />}
+        />
       </Tab.Navigator>
       <MusicPlayer route={route} song={song} />
     </>

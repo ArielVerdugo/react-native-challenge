@@ -30,7 +30,7 @@ import {toggleSoundBar} from '../../redux/Actions';
 
 Sound.setCategory(PLAYBACK);
 
-export function SongInfo({setSong}) {
+export function SongInfo({data}) {
   const theme = useColorScheme();
   const isDarkTheme = theme === DARK;
   const [isPlaying, setPlaying] = useState(false);
@@ -59,7 +59,7 @@ export function SongInfo({setSong}) {
     } else {
       setShowSoundBar(false);
       setPlaying(true);
-      setSong.setSong(sound);
+      data.setSong(sound);
       sound.play(success => {
         if (success) {
           setPlaying(false);

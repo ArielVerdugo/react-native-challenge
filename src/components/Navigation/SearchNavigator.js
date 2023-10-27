@@ -33,9 +33,9 @@ export function SearchNavigator(setSong) {
           headerShown: false,
           animationTypeForReplace: 'push',
           animation: 'slide_from_bottom',
-        }}>
-        {() => <SongInfo setSong={setSong} />}
-      </Stack.Screen>
+        }}
+        children={() => <SongInfo data={setSong} />}
+      />
     </Stack.Navigator>
   );
 }
